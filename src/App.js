@@ -1,23 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import FoodOrder from "./Components/FoodOrder";
+import OrderMade from "./Components/OrderMade";
 
-function App() {
+function App(props) {
+  const [details, setDetails] = useState([]);
+
+  const foodSubmission = (id, price, dish, table) => {
+    setDetails((prevState) => {
+      return [
+        ...prevState,
+        {
+          id: id,
+          price: price,
+          dish: dish,
+          table: table,
+        },
+      ];
+    });
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <FoodOrder onSubmit={foodSubmission}></FoodOrder>
+      <OrderMade items={details}></OrderMade>
     </div>
   );
 }
